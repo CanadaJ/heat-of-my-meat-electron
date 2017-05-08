@@ -1,0 +1,12 @@
+{
+    "name": "heat-of-my-meat-electron",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "devDependencies": {
+        "electron-prebuilt": "^1.4.13"
+    },
+    "scripts": {
+        "start": "electron main.js"
+    }
+}
