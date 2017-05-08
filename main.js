@@ -7,7 +7,7 @@ let win; // global window obj
 function createWindow() {
 
     // create browser window
-    win = new BrowserWindow({width: 800, height: 480});
+    win = new BrowserWindow({width: 800, height: 480, frame: false});
 
     // load index.html
     win.loadURL(url.format({
@@ -16,8 +16,7 @@ function createWindow() {
         slashes: true
     }));
 
-    // open devtools (?)
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 
     // emitted on window close
     win.on('closed', () => {
@@ -25,24 +24,24 @@ function createWindow() {
         // dereference window obj, deref relevent page if multiple
         win = null;
     });
-
-    // called when electron finishes init
-    app.on('ready', createWindow);
-
-    // quit when all windows closed
-    app.on('window-all-closed', () => {
-
-        // ofc mac has issues
-        if (process.platform !== 'darwin') {
-            app.quit();
-        }
-    });
-
-    app.on('activate', () => {
-
-        // guess who
-        if (win === null) {
-            createWindow
-        }
-    });
 }
+
+// called when electron finishes init
+app.on('ready', createWindow);
+
+// quit when all windows closed
+app.on('window-all-closed', () => {
+
+    // ofc mac has issues
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+
+    // guess who
+    if (win === null) {
+        createWindow
+    }
+});
