@@ -7,7 +7,12 @@ let win; // global window obj
 function createWindow() {
 
     // create browser window
-    win = new BrowserWindow({width: 800, height: 480, frame: false});
+    win = new BrowserWindow({
+        width: 800,
+        height: 480,
+        frame: false,
+        resizable: true
+    });
 
     // load index.html
     win.loadURL(url.format({

@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    font-family: Verdana, Arial, sans-serif;
+}
+
+.overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: none;
+    height: 100%;
+    pointer-events: none;
+}
+
+.overlay.fadeOut {
+    display: block;
+    pointer-events: none;
+    animation: fadeOut 0.3s forwards;
+}
+
+.overlay.fadeIn {
+    display: block;
+    pointer-events: all;
+    animation: fadeIn 0.3s forwards;
+}
+
+.menu-bar-container {
+    width: 100%;
+    min-height: 40px;
+}
+
+.menu-hamburger-icon {
+    width: 30px;
+}
+
+.menu-bar {
+    background-color: #FF4949;
+}
+
+.menu-options-container {
+    display: none;
+    z-index: 11;
+    background-color: #FF4949;
+    width: 200px;
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    left: -200px;
+    height: 100%;
+}
+
+.menu-options-container.swipeOut {
+    display: inline-block;
+    animation: swipeOut 0.3s forwards;
+}
+
+.menu-options-container.swipeIn {
+    display: inline-block;
+    animation: swipeIn 0.3s forwards;
+}
+
+.menu-option {
+    padding: 15px;
+}
+
+.menu-option-seperator {
+    border-top: 3px solid #000000;
+}
+
+@keyframes swipeIn {
+    0% {
+        left: -200px;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+@keyframes swipeOut {
+    0% {
+        left: 0px;
+    }
+
+    100% {
+        left: -200px;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    100% {
+        background: rgba(0, 0, 0, 0);
+    }
+}
