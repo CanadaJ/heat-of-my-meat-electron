@@ -32,8 +32,9 @@ body {
     min-height: 40px;
 }
 
-.menu-hamburger-icon {
-    width: 30px;
+.menu-bar-icon {
+    width: 40px;
+    cursor: pointer;
 }
 
 .menu-bar {
@@ -43,12 +44,12 @@ body {
 .menu-options-container {
     display: none;
     z-index: 11;
-    background-color: #FF4949;
-    width: 200px;
+    background-color: #FFFFFF;
+    width: 300px;
     font-size: 16px;
     position: absolute;
     top: 0;
-    left: -200px;
+    left: -300px;
     height: 100%;
 }
 
@@ -64,19 +65,31 @@ body {
 
 .menu-option {
     padding: 15px;
+    cursor: pointer;
+}
+
+.menu-option-icon {
+    display: inline-block;
+    width: 50px;
 }
 
 .menu-option-seperator {
-    border-top: 3px solid #000000;
+    border-top: 1px solid #6d6d6d;
+}
+
+span.icon, div.icon-menu {
+    color: #000000;
 }
 
 @keyframes swipeIn {
     0% {
-        left: -200px;
+        left: -300px;
+        box-shadow: 3px 0px 5px 0px rgba(0,0,0,0);
     }
 
     100% {
         left: 0px;
+        box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.75);
     }
 }
 
@@ -86,7 +99,7 @@ body {
     }
 
     100% {
-        left: -200px;
+        left: -300px;
     }
 }
 
