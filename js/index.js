@@ -31,3 +31,24 @@ overlay.addEventListener('click', function() {
         menuOptions.classList.toggle('swipeIn');
     }
 });
+
+function clock() {
+    var date = new Date();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+
+    hours = hours > 12 ? hours - 12 : hours;
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+    seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    document.querySelector('#menu-clock').innerHTML = `${hours}:${minutes}:${seconds}`;
+
+    var timeout = setTimeout(clock, 500);
+}
+
+function windowLoad() {
+    clock();
+}
+
+window.onload = windowLoad();
