@@ -106,6 +106,49 @@ body {
     color: #FFFFFF;
 }
 
+.main-container {
+    display: flex;
+    height: 420px;
+}
+
+.prev-temp, .next-temp {
+    height: 100%;
+    width: 80px;
+    background: rgba(0, 0, 0, .20);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.prev-temp span, .next-temp span {
+    z-index: 3;
+}
+
+.prev-temp span {
+    margin-left: 30px;
+}
+
+.next-temp span {
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.prev-temp span:before, .prev-temp span:after, .next-temp span:before, .next-temp span:after {
+    width: 24px;
+    color: #000000;
+}
+
+.prev-temp {
+    align-self: flex-start;
+    box-shadow: 3px 0 5px 0 rgba(0,0,0,0.33);
+
+}
+
+.next-temp {
+    margin-left: auto;
+    box-shadow: -3px 0 5px 0 rgba(0,0,0,0.33);
+}
+
 span.icon, div.icon-menu {
     color: #000000;
 }
