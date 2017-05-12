@@ -1,6 +1,18 @@
+var exec = require('child_process').exec;
+
 var overlay = document.querySelector('.overlay');
 var menuBar = document.querySelector('#menu-hamburger-icon');
 var menuOptions = document.querySelector('.menu-options-container');
+var menuClock = document.querySelector('#menu-clock');
+
+menuClock.addEventListener('click', function() {
+    var cmd = 'date -s "01 JAN 2000 00:00:00"';
+    exec(cmd, function(error, stdout, stderr) {
+        console.log(`error; ${error}`);
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+    });
+});
 
 menuBar.addEventListener('click', function() {
     menuBar.classList.toggle('is-active');
