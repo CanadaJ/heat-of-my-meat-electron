@@ -3,6 +3,9 @@ var exec = require('child_process').exec;
 var overlay = document.querySelector('.overlay');
 var menuBar = document.querySelector('#menu-hamburger-icon');
 var menuOptions = document.querySelector('.menu-options-container');
+var mainContentWrapper = document.querySelector('.main-content-wrapper');
+var mainContent = document.querySelector('.main-content');
+var settingsArrow = document.querySelector('.temp-settings');
 
 menuBar.addEventListener('click', function() {
     menuBar.classList.toggle('is-active');
@@ -53,4 +56,26 @@ function windowLoad() {
     clock();
 }
 
+function testScroll() {
+    if (mainContentWrapper.scrollTop === (mainContentWrapper.scrollHeight - mainContentWrapper.offsetHeight)) {
+        if (!settingsArrow.classList.contains('bottom')) {
+            settingsArrow.classList.add('bottom');
+        }
+
+        if (settingsArrow.classList.contains('top'))
+        {
+            settingsArrow.classList.remove('top');
+        }
+    }
+    else 
+    {
+        if (settingsArrow.classList.contains('bottom')) {
+            settingsArrow.classList.remove('bottom');
+            settingsArrow.classList.add('top');
+        }
+    }
+}
+
 window.onload = windowLoad();
+
+mainContentWrapper.onscroll = testScroll;

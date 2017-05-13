@@ -208,6 +208,34 @@ span.icon, div.icon-menu {
     margin-top: 20px;
 }
 
+.temp-settings.top {
+    animation: rotateNinetyEnd 0.2s forwards;
+}
+
+.temp-settings.bottom {
+    animation: rotateNinetyStart 0.2s forwards;
+}
+
+@keyframes rotateNinetyStart {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotateNinetyEnd {
+    0% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
 @keyframes swipeIn {
     0% {
         left: -300px;
