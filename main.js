@@ -2,6 +2,16 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 
+// db
+var mysql = require('mysql');
+
+var conn = mysql.createConnection({
+
+});
+
+// hot reload
+require('electron-reload')(__dirname);
+
 let win; // global window obj
 
 function createWindow() {
@@ -33,20 +43,3 @@ function createWindow() {
 
 // called when electron finishes init
 app.on('ready', createWindow);
-
-// quit when all windows closed
-app.on('window-all-closed', () => {
-
-    // ofc mac has issues
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
-
-app.on('activate', () => {
-
-    // guess who
-    if (win === null) {
-        createWindow
-    }
-});
