@@ -16,6 +16,7 @@ const config = require('./config');
 
 // components
 const Clock = require('./js/Components/Clock');
+var MAX31855 = require('max31855');
 
 // sql
 var mysql = require('mysql');
@@ -57,6 +58,14 @@ overlay.addEventListener('click', function() {
 
 tempGraph.addEventListener('click', function () {
 
+    // attempt to read a temp
+    var sensor = new max31855();
+
+    sensor.readTempC(function(temp) {
+      console.log(temp);
+    });
+
+
     // do an insert into the db
     let randomTemp = (Math.random() * (300 - 150) + 150).toFixed(2);
     let time = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -82,7 +91,7 @@ function testScroll() {
             settingsArrow.classList.remove('top');
         }
     }
-    else 
+    else
     {
         if (settingsArrow.classList.contains('bottom')) {
             settingsArrow.classList.remove('bottom');
