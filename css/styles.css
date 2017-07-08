@@ -151,7 +151,7 @@ body {
 }
 
 .prev-temp:hover, .next-temp:hover {
-    background: rgba(0, 0, 0, .33); 
+    background: rgba(0, 0, 0, .33);
 }
 
 .prev-temp:hover {
@@ -197,11 +197,9 @@ span.icon, div.icon-menu {
     font-size: 48px;
 }
 
-#temp-graph {
+#temp-graph-wrapper {
     width: 80%;
-    background-color: blue;
     margin: 0 auto;
-    height: 200px;
 }
 
 .temp-settings {

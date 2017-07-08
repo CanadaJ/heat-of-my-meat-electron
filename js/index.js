@@ -1,5 +1,6 @@
 var exec = require('child_process').exec;
 var moment = require('moment');
+var chart = require('chart.js');
 
 var overlay = document.querySelector('.overlay');
 var menuBar = document.querySelector('#menu-hamburger-icon');
@@ -7,16 +8,29 @@ var menuOptions = document.querySelector('.menu-options-container');
 var mainContentWrapper = document.querySelector('.main-content-wrapper');
 var mainContent = document.querySelector('.main-content');
 var settingsArrow = document.querySelector('.temp-settings');
+var probeTemp = document.querySelector('#probe-temp');
 
 // temp graph
-let tempGraph = document.querySelector('#temp-graph');
+let graphCtx = document.getElementById('temp-graph').getContext('2d');
+let tempGraph = null;
+let temps = {
+  labels: [],
+  datasets: [{
+    label: "Probe 0",
+    backgroundColor: 'rgb(255, 99, 132)',
+    borderColor: 'rgb(255, 99, 132)',
+    pointRadius: 5,
+    fill: false,
+    spanGaps: false,
+    data: []
+  }]
+};
 
 // config
 const config = require('./config');
 
 // components
 const Clock = require('./js/Components/Clock');
-var MAX31855 = require('max31855');
 
 // sql
 var mysql = require('mysql');
@@ -56,30 +70,6 @@ overlay.addEventListener('click', function() {
     }
 });
 
-tempGraph.addEventListener('click', function () {
-
-    // attempt to read a temp
-    var sensor = new max31855();
-
-    sensor.readTempC(function(temp) {
-      console.log(temp);
-    });
-
-
-    // do an insert into the db
-    let randomTemp = (Math.random() * (300 - 150) + 150).toFixed(2);
-    let time = moment().format('YYYY-MM-DD HH:mm:ss');
-
-    let query = `CALL RecordTemp (1, null, ${randomTemp}, "${time}")`
-
-    dbConn.query(query, function(err) {
-
-        if(err) console.log(err);
-
-    });
-
-});
-
 function testScroll() {
     if (mainContentWrapper.scrollTop === (mainContentWrapper.scrollHeight - mainContentWrapper.offsetHeight)) {
         if (!settingsArrow.classList.contains('bottom')) {
@@ -101,11 +91,51 @@ function testScroll() {
 }
 
 function getTemps() {
-    dbConn.query('CALL GetTempsForProbe(1, 10)', function(err, rows) {
-        if (err) console.log(err);
+  // ask python for a temp
+  var probe = exec('python probeDriver.py', function (error, stdout, stderr) {
 
-        console.log(rows);
+    console.log(error);
+    console.log(stdout);
+    console.log(stderr);
+
+    let query = `insert into temp values(${stdout}, now());`;
+
+    console.log(query);
+
+    dbConn.query(query, function(err) {
+
+        if(err) console.log(err);
+
     });
+
+    probeTemp.innerHTML = `${stdout} F`;
+
+    updateTempGraph(stdout, Date.now());
+
+  });
+}
+
+function updateTempGraph(temp, dt) {
+  console.log(tempGraph);
+
+  // shift array if its too long
+  if (tempGraph.chart.data.labels.length === 10)
+  {
+    tempGraph.chart.data.labels.shift();
+  }
+
+  tempGraph.chart.data.labels.push("");
+  tempGraph.chart.data.datasets.forEach((dataset) => {
+
+    // shift if needed
+    if (dataset.data.length === 10)
+    {
+      dataset.data.shift();
+    }
+
+    dataset.data.push(temp);
+  });
+  tempGraph.chart.update();
 }
 
 function setClockTime() {
@@ -150,6 +180,41 @@ function setupApp() {
 
     clock = new Clock();
     setInterval(setClockTime, 500);
+
+    // set up graph
+    tempGraph = new Chart(graphCtx, {
+      type: 'line',
+      data: temps,
+      options: {
+        legend: {
+          display: false
+        },
+        tooltips: {
+          display: false
+        },
+        elements: {
+          line: {
+            tension: 0
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              min: 50,
+              max: 100
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
+    // get an initial temp
+    getTemps();
 
     setInterval(getTemps, 5000);
 }

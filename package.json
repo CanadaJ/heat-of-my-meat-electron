@@ -10,5 +10,10 @@
     },
     "scripts": {
         "start": "electron main.js"
+    },
+    "dependencies": {
+        "chart.js": "^2.6.0",
+        "electron-reload": "^1.2.1",
+        "mysql": "^2.13.0"
     }
 }

@@ -31,7 +31,7 @@ function createWindow() {
         slashes: true
     }));
 
-    //win.webContents.openDevTools();
+    win.webContents.openDevTools();
 
     // emitted on window close
     win.on('closed', () => {
